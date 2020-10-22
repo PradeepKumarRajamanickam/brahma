@@ -4,13 +4,16 @@ mod systems;
 mod constants;
 mod components;
 mod events;
+mod materials;
 
 use editor::*;
 use events::*;
+use materials::*;
 use components::*;
 
 use bevy::{app::prelude::*};
 use bevy::ecs::IntoQuerySystem;
+
 
 
 #[derive(Default)]
@@ -26,6 +29,7 @@ impl Plugin for BrahmaEditorPlugin {
         // resources
         .init_resource::<BrahmaEditor>()
         .init_resource::<BrahmaViewport>()
+        .init_resource::<BrahmaMaterials>()
 
         // events
         .add_event::<OnNodeSelectedEvent>()
