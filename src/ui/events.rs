@@ -1,5 +1,5 @@
 use bevy::{prelude::*, math::*};
-use super::{editor::BrahmaEditor, components::*};
+use super::{editor::BrahmaEditor, components::*, materials::*};
 
 pub struct OnCreateNewViewportEvent;
 
@@ -57,13 +57,33 @@ impl BrahmaEditor
     }
 
     pub(crate) fn on_node_selected(
+        materials: Res<BrahmaMaterials>,
         events: Res<Events<OnNodeSelectedEvent>>,
-        mut reader: Local<EventReader<OnNodeSelectedEvent>>
+        mut reader: Local<EventReader<OnNodeSelectedEvent>>,
+
+        mut title_bar_query: Query<(
+            &BrahmaOwnerElementId,
+            &BrahmaTitleBarTagComponent,
+            &mut Handle<ColorMaterial>
+        )>,
     )
     {
         for ev in reader.iter(&events)
         {
-            println!("BrahmaEditor: Selected Node {}", ev.0);
+            let _owner_id: u64 = ev.0;
+            println!("BrahmaEditor: Selected Node {}", _owner_id);
+
+            // title bar
+            for (owner_id, _tag, mut mat) in &mut title_bar_query.iter()
+            {
+                if owner_id.0 == _owner_id
+                {
+                    *mat = materials.title_bar_selected.clone();
+                }else
+                {
+                    *mat = materials.title_bar_normal.clone();
+                }
+            }
         }
     }
 
