@@ -79,7 +79,8 @@ impl BrahmaEditor {
                 material: materials.add(BrahmaEditor::TITLE_BAR_NORMAL_COLOR.into()),
                 ..Default::default()
             })
-            // .with(BrahmaTitleBarTagComponent)
+            .with(BrahmaOwnerElementId(owner_id))
+            .with(BrahmaTitleBarTagComponent)
 
             // title
             .with_children(|parent| {
@@ -105,8 +106,10 @@ impl BrahmaEditor {
                     })
                     .with(BrahmaOwnerElementId(owner_id))
                     .with(BrahmaSelectableUiComponent)
+
                     .with_children(|parent| {
-                        parent.spawn(TextComponents {
+                        parent
+                        .spawn(TextComponents {
                             text: Text {
                                 value: title.to_string(),
                                 font: asset_server.load(BrahmaEditor::FONT.to_string()).unwrap(),
@@ -116,7 +119,9 @@ impl BrahmaEditor {
                                 },
                             },
                             ..Default::default()
-                        });
+                        })
+                        .with(BrahmaOwnerElementId(owner_id))
+                        .with(BrahmaTitleTextTagComponent);
                     });
             });
     }
@@ -141,7 +146,7 @@ impl BrahmaEditor {
             ..Default::default()
         })
         .with(BrahmaOwnerElementId(owner_id))
-        .with(BrahmaSelectableUiComponent);
-        // .with(BrahmaBodyTagComponent);
+        .with(BrahmaSelectableUiComponent)
+        .with(BrahmaBodyTagComponent);
     }
 }
