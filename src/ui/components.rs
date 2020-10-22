@@ -83,6 +83,10 @@ pub struct BrahmaNodeRoot;
 #[derive(Default, Clone)]
 pub struct BrahmaTitleBarTagComponent;
 
+// tag to identify title text
+#[derive(Default, Clone)]
+pub struct BrahmaTitleTextTagComponent;
+
 // tag to identify node body
 #[derive(Default, Clone)]
 pub struct BrahmaBodyTagComponent;
