@@ -3,7 +3,7 @@ name = "brahma"
 version = "0.0.1"
 authors = ["Pradeep Kumar Rajamanickam <raj.pradeep.kumar@gmail.com>"]
 edition = "2018"
-description = "A general purpose data driven hfsm plugin for bevy."
+description = "Visual code + fsm editor for rust/bevy"
 license = "MIT"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
