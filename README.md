@@ -1,21 +1,34 @@
 # brahma
-A general purpose data driven hfsm plugin for bevy.
+*Visual code + fsm editor for rust/bevy*
 
-## Goals
-- Provide a simple but robust visual editor (similar to bolt)
-- Support multiple simultaneous fsm instances
+![Ludiq Bolt](https://i.imgur.com/axrdxaY.jpg)
+**Ludiq Bolt**
 
-## Usecases
-- Gamelogic
-- UX Flow
-- AI
-- Animation State Machine
+Inspired by Ludiq Bolt. Brahma aims to provide a simple yet robust editor capable of authoring logic graph (function call graph) and state graph (state machine graph), which gets compiled into consumable rust code.
 
-## Why?
-It is much easier to follow control flows visually than in code. Reduces the barrier of entry for new comers. Much easier to maintain large complex flows.
+It aims,
 
-## What it is not?
-A performance critical system. It is better to write performance critical aspects as seperate systems and bridging them with the graph for higher level flow control.
+- to reduce the barrier of entry for new comers, i.e. artists, designers and hobby programmers
+- to make higher level flow related content authoring easier, i.e. gamelogic, ux flow, ai fsm, animation fsm. General idea is, it is much easier to follow control flows visually than in code.
 
-Inspired By:
-[Ludiq Bolt](https://assetstore.unity.com/packages/tools/visual-scripting/bolt-163802)
+## Feature Set
+### Logic Graph
+Functions represented visually
+- Author custom functions visually
+- Interop with Bevy Resources
+- Call existing rust methods
+
+### State Graph
+Event driven States and Transistions. Container for logic nodes.
+- Utilises Bevy Events
+- Support Multiple Instances
+- Hierarchical State Machine [TBD]
+- Local Events [TBD]
+
+### Editor Features
+- Search Palette: fuzzy search types like Events, Resources and Rust methods
+
+## Architecture Overview
+![](https://i.imgur.com/psDM6uV.png)
+
+**Editor Architecture Overview**
