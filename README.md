@@ -29,6 +29,6 @@ Event driven States and Transistions. Container for logic nodes.
 - Search Palette: fuzzy search types like Events, Resources and Rust methods
 
 ## Architecture Overview
-![](https://i.imgur.com/psDM6uV.png)
+![](https://github.com/PradeepKumarRajamanickam/brahma/blob/master/brahma.jpg)
 
 **Editor Architecture Overview**
