@@ -1,0 +1,15 @@
+[package]
+name = "brahma_graph"
+version = "0.0.1"
+authors = ["PradeepKumar <pradeep.kumar5@byjus.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+ron = "0.6.2"
+
+[[example]]
+name = "test"
+path = "example/test.rs"
+
