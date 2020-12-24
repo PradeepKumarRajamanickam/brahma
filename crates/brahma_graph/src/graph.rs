@@ -1,11 +1,10 @@
-use std::collections::{HashMap, HashSet};
 use serde::{Deserialize, Serialize};
+use std::collections::{HashMap, HashSet};
 
 use crate::*;
 
 #[derive(Default, Serialize, Deserialize)]
 pub struct Graph {
-    
     // dependencies
     pub dep_package: HashMap<String, String>,
 

@@ -1,12 +1,10 @@
-use std::collections::HashSet;
 use serde::{Deserialize, Serialize};
+use std::collections::HashSet;
 
 use crate::*;
 
 impl Graph {
-
-    pub fn add_bevy_event_node(&mut self, bevy_event: BevyEvent) -> u64
-    {
+    pub fn add_bevy_event_node(&mut self, bevy_event: BevyEvent) -> u64 {
         let id = self.get_new_id();
         self.node_bevy_events.insert(id, bevy_event);
 
@@ -14,26 +12,25 @@ impl Graph {
 
         return id;
     }
-    pub fn remove_bevy_event_node(&mut self, id: u64)
-    {
+    pub fn remove_bevy_event_node(&mut self, id: u64) {
         self.type_node.remove(&id);
 
-        if let Some(n) = self.node_bevy_events.clone().get(&id)
-        {
+        if let Some(n) = self.node_bevy_events.clone().get(&id) {
             // remove argument connections
-            for d in n.arguments.clone()
-            {
+            for d in n.arguments.clone() {
                 self.disconnect_data_port(d.clone());
             }
-            
+
             self.disconnect_lane_control_port_for_node(id)
         }
 
         self.node_bevy_events.remove(&id);
     }
 
-    pub fn add_bevy_resource_node(&mut self, bevy_resource: BevyResource) -> u64
-    {
+    pub fn add_bevy_resource_node(
+        &mut self,
+        bevy_resource: BevyResource,
+    ) -> u64 {
         let id = self.get_new_id();
         self.node_bevy_resources.insert(id, bevy_resource);
 
@@ -41,12 +38,10 @@ impl Graph {
 
         return id;
     }
-    pub fn remove_bevy_resource_node(&mut self, id: u64)
-    {
+    pub fn remove_bevy_resource_node(&mut self, id: u64) {
         self.type_node.remove(&id);
-        
-        if let Some(n) = self.node_bevy_resources.clone().get(&id)
-        {
+
+        if let Some(n) = self.node_bevy_resources.clone().get(&id) {
             self.disconnect_data_port(n.getter.clone());
             self.disconnect_data_port(n.setter.clone());
             self.disconnect_lane_control_port_for_node(id);
@@ -54,8 +49,7 @@ impl Graph {
         self.node_bevy_resources.remove(&id);
     }
 
-    pub fn add_bevy_method_node(&mut self, bevy_method: BevyMethod) -> u64
-    {
+    pub fn add_bevy_method_node(&mut self, bevy_method: BevyMethod) -> u64 {
         let id = self.get_new_id();
         self.node_bevy_methods.insert(id, bevy_method);
 
@@ -63,20 +57,16 @@ impl Graph {
 
         return id;
     }
-    pub fn remove_bevy_method_node(&mut self, id: u64)
-    {
+    pub fn remove_bevy_method_node(&mut self, id: u64) {
         self.type_node.remove(&id);
 
-        if let Some(n) = self.node_bevy_methods.clone().get(&id)
-        {
+        if let Some(n) = self.node_bevy_methods.clone().get(&id) {
             // remove param connections
-            for d in n.params.clone()
-            {
+            for d in n.params.clone() {
                 self.disconnect_data_port(d.clone());
             }
 
-            if let Some(r) = n.returns
-            {
+            if let Some(r) = n.returns {
                 self.disconnect_data_port(r.clone());
             }
 
@@ -120,11 +110,11 @@ pub struct BevyResource {
 pub struct BevyMethod {
     // data ports
     pub params: HashSet<u64>, // input parameters
-    pub returns: Option<u64>,  // return value
+    pub returns: Option<u64>, // return value
 
     // dep info
     pub imports: Option<String>,
-    
+
     // method info
     pub function_name: String, // function call
 }

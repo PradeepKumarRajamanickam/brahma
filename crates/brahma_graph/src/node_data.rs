@@ -4,8 +4,7 @@ use crate::*;
 use serde::{Deserialize, Serialize};
 
 impl Graph {
-    pub fn add_variable_node(&mut self, variable: Variable) -> u64
-    {
+    pub fn add_variable_node(&mut self, variable: Variable) -> u64 {
         let id = self.get_new_id();
         self.node_variables.insert(id, variable);
 
@@ -13,12 +12,10 @@ impl Graph {
 
         return id;
     }
-    pub fn remove_variable_node(&mut self, id: u64)
-    {
+    pub fn remove_variable_node(&mut self, id: u64) {
         self.type_node.remove(&id);
 
-        if let Some(n) = self.node_variables.clone().get(&id)
-        {
+        if let Some(n) = self.node_variables.clone().get(&id) {
             self.disconnect_data_port(n.getter);
             self.disconnect_data_port(n.setter);
             self.disconnect_lane_control_port_for_node(id);
@@ -27,8 +24,7 @@ impl Graph {
         self.node_variables.remove(&id);
     }
 
-    pub fn add_collection_node(&mut self, collection: Collection) -> u64
-    {
+    pub fn add_collection_node(&mut self, collection: Collection) -> u64 {
         let id = self.get_new_id();
         self.node_collection.insert(id, collection);
 
@@ -36,15 +32,12 @@ impl Graph {
 
         return id;
     }
-    pub fn remove_collection_node(&mut self, id: u64)
-    {
+    pub fn remove_collection_node(&mut self, id: u64) {
         self.type_node.remove(&id);
 
-        if let Some(n) = self.node_collection.clone().get(&id)
-        {
+        if let Some(n) = self.node_collection.clone().get(&id) {
             // remove param connections
-            for p in n.setter.clone()
-            {
+            for p in n.setter.clone() {
                 self.disconnect_data_port(p);
             }
 

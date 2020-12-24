@@ -1,9 +1,5 @@
-pub use self::
-{
-    plugin::*,
-    components::Machine
-};
+pub use self::{components::Machine, plugin::*};
 
+mod components;
 mod plugin;
 mod systems;
-mod components;

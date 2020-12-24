@@ -1,8 +1,4 @@
-pub use self::
-{
-    bootstrap::*,
-};
-
+pub use self::bootstrap::*;
 
 mod bootstrap;
 pub mod sample_machine;

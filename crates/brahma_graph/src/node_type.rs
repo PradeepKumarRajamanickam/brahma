@@ -6,7 +6,7 @@ pub enum NodeType {
 
     // fsm nodes
     Event,
-    State,       
+    State,
     Transit,
     Transition,
 
@@ -16,11 +16,11 @@ pub enum NodeType {
     BevyResource,
 
     // method nodes
-    Algo,       
+    Algo,
     Method,
     Return,
     Execute,
-    
+
     // data node
     Variable,
     Collection,

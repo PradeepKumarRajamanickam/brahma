@@ -2,10 +2,14 @@ use std::collections::HashSet;
 
 use crate::Graph;
 
-impl Graph{
+impl Graph {
     // control ports
     // fsm node control port
-    pub fn connect_fsm_control_ports(&mut self, src: u64, dest: u64) -> Result<(), &str> {
+    pub fn connect_fsm_control_ports(
+        &mut self,
+        src: u64,
+        dest: u64,
+    ) -> Result<(), &str> {
         if src == dest {
             return Err("Cannot connect to self");
         }
@@ -25,12 +29,16 @@ impl Graph{
             set.remove(&dest);
         }
     }
-    pub fn disconnect_fsm_control_port_for_node(&mut self,  node: u64) {
+    pub fn disconnect_fsm_control_port_for_node(&mut self, node: u64) {
         self.connection_fsm_control_ports.remove(&node);
     }
 
     // lane node control port
-    pub fn connect_lane_control_ports(&mut self, src: u64, dest: u64) -> Result<(), &str> {
+    pub fn connect_lane_control_ports(
+        &mut self,
+        src: u64,
+        dest: u64,
+    ) -> Result<(), &str> {
         if src == dest {
             return Err("Cannot connect to self");
         }
@@ -45,17 +53,21 @@ impl Graph{
 
         return Ok(());
     }
-    pub fn disconnect_lane_control_port(&mut self,  src: u64, dest: u64) {
+    pub fn disconnect_lane_control_port(&mut self, src: u64, dest: u64) {
         if let Some(set) = self.connection_lane_control_ports.get_mut(&src) {
             set.remove(&dest);
         }
     }
-    pub fn disconnect_lane_control_port_for_node(&mut self,  node: u64) {
+    pub fn disconnect_lane_control_port_for_node(&mut self, node: u64) {
         self.connection_lane_control_ports.remove(&node);
     }
 
     // data port
-    pub fn connect_data_port(&mut self, src: u64, dest: u64) -> Result<(), &str> {
+    pub fn connect_data_port(
+        &mut self,
+        src: u64,
+        dest: u64,
+    ) -> Result<(), &str> {
         if src == dest {
             return Err("Cannot connect to self");
         }
