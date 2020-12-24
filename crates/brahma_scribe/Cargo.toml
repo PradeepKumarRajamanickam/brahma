@@ -1,0 +1,11 @@
+[package]
+name = "brahma_scribe"
+version = "0.0.1"
+authors = ["pradeep kumar rajamanickam <raj.pradeep.kumar@gmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+codegen = "*"
+brahma_graph = { path = "../brahma_graph"}

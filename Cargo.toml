@@ -15,5 +15,11 @@ categories = ["game-dev", "automaton", "productivity", "editor"]
 members = ["crates/*"]
 
 [dependencies]
+bevy = "0.4"
 brahma_graph    = { path = "crates/brahma_graph" }
-brahma_scribe   = { path = "crates/brahma_scribe" }
+brahma_yantra   = { path = "crates/brahma_yantra" }
+# brahma_scribe   = { path = "crates/brahma_scribe" }
+
+[[example]]
+name = "test"
+path = "test/test.rs"
