@@ -64,7 +64,7 @@ pub struct BrahmaOwnerElementId(pub u64);
 
 /// Interacting with component allows you to drag the node
 #[derive(Default, Clone)]
-pub struct BrahmaMoveHandleUiComponent;
+pub struct BrahmaDragHandleUiComponent;
 
 /// Interacting with component causes the node to be selected 
 #[derive(Default, Clone)]

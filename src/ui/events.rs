@@ -9,7 +9,13 @@ pub struct OnCreateNewNodeEvent
     pub position: Vec2
 }
 pub struct OnNodeSelectedEvent(pub u64);
+pub struct OnNodeDragEvent(pub u64, pub Vec2);
 pub struct OnNodeDeleteEvent(pub u64);
+
+pub struct OnNoodleSelectedEvent(pub u64);
+pub struct OnNoodleDragEvent(pub u64, pub Vec2);
+pub struct OnNoodleDropEvent(pub u64, pub u64); // param 0 source, param 1 target if 0 none
+
 
 impl BrahmaEditor
 {
@@ -20,7 +26,7 @@ impl BrahmaEditor
         events: Res<Events<OnCreateNewViewportEvent>>,
         mut reader: Local<EventReader<OnCreateNewViewportEvent>>,
     ) {
-        for _ev in reader.iter(&events) {
+        for _ev in reader.latest(&events) {
             let mut viewport_root = commands
                 .spawn(NodeComponents {
                     ..Default::default()
@@ -66,9 +72,15 @@ impl BrahmaEditor
             &BrahmaTitleBarTagComponent,
             &mut Handle<ColorMaterial>
         )>,
+
+        mut title_text_query: Query<(
+            &BrahmaOwnerElementId,
+            &BrahmaTitleTextTagComponent,
+            &mut Handle<ColorMaterial>
+        )>,
     )
     {
-        for ev in reader.iter(&events)
+        for ev in reader.latest(&events)
         {
             let _owner_id: u64 = ev.0;
             println!("BrahmaEditor: Selected Node {}", _owner_id);
@@ -96,12 +108,30 @@ impl BrahmaEditor
     {
         for ev in reader.iter(&events)
         {
-            let entity = editor.get_entity_from_id(editor.currently_selected_node).unwrap();
+            let _owner_id: u64 = ev.0;
+            let entity = editor.get_entity_from_id(_owner_id).unwrap();
             commands.despawn_recursive(*entity);
 
             editor.currently_selected_node = 0;
 
             println!("BrahmaEditor: Deleted Node {}", ev.0);
+        }
+    }
+
+    pub(crate) fn on_node_drag(
+        mut commands: Commands,
+        mut trans: ResMut<Translation>,
+        mut editor: ResMut<BrahmaEditor>,
+        events: Res<Events<OnNodeDragEvent>>,
+        mut reader: Local<EventReader<OnNodeDragEvent>>
+    )
+    {
+        for ev in reader.latest(&events)
+        {
+            let id = ev.0;
+            let delta = ev.1;
+            let entity = editor.get_entity_from_id(id).unwrap();
+            println!("BrahmaEditor: Drag Node {} {}", id, delta);
         }
     }
 }

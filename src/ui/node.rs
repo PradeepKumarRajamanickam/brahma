@@ -106,6 +106,7 @@ impl BrahmaEditor {
                     })
                     .with(BrahmaOwnerElementId(owner_id))
                     .with(BrahmaSelectableUiComponent)
+                    .with(BrahmaDragHandleUiComponent)
 
                     .with_children(|parent| {
                         parent
