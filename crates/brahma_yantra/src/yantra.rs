@@ -156,6 +156,8 @@ impl Yantra {
                         .current_entity()
                         .unwrap();
 
+                    yantra.lane_to_owner_machine.insert(ent_lane, owner_entity);
+
                     println!(
                         "Added State Lane {} for Machine {}",
                         ent_lane.id(),
@@ -169,6 +171,9 @@ impl Yantra {
                         .with(Parent(machine_entity))
                         .current_entity()
                         .unwrap();
+
+                    yantra.lane_to_owner_machine.insert(ent_lane, owner_entity);
+
                     println!(
                         "Added Transition Lane {} for Machine {}",
                         ent_lane.id(),
@@ -183,6 +188,10 @@ impl Yantra {
                 "Initialisation completed for Machine Instance {}",
                 owner_entity.id()
             );
+
+            if mach_builder.enabled {
+                yantra.start(owner_entity);
+            }
         }
     }
 

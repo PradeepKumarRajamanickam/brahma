@@ -45,6 +45,6 @@ fn setup(
             sprite: Sprite::new(Vec2::new(120.0, 30.0)),
             ..Default::default()
         })
-        .with(brahma_logics::sample_machine::Machine);
+        .with(brahma_logics::sample_machine::Machine { enabled: true });
     println!("Test: Setup Done");
 }

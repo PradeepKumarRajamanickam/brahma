@@ -11,15 +11,17 @@ use crate::brahma_logics::sample_machine::*;
 use super::*;
 
 #[derive(Default)]
-pub struct Machine;
+pub struct Machine {
+    pub enabled: bool,
+}
 
 // machine
 pub(crate) fn on_machine_added(
     mut commands: &mut Commands,
     mut yantra: ResMut<Yantra>,
-    query: Query<Entity, Added<Machine>>,
+    query: Query<(Entity, &Machine), Added<Machine>>,
 ) {
-    for ent_machine in query.iter() {
+    for (ent_machine, machine) in query.iter() {
         // **********
         // * STATES *
         // **********
@@ -62,6 +64,8 @@ pub(crate) fn on_machine_added(
         // * RELATIONSHIPS *
         // *****************
 
+        let YANTRA_Start = STATE_Start;
+
         // * Transition target state to switch to
         let mut hmap_transit_targets = HashMap::new();
 
@@ -73,6 +77,7 @@ pub(crate) fn on_machine_added(
         let mut hmap_state_trans = HashMap::new();
         hmap_state_trans
             .insert(STATE_Start.clone(), vec![TRANSITION_Start_TO_Choice]);
+        hmap_state_trans.insert(STATE_Choice.clone(), vec![]);
 
         // **************
         // * INITIALISE *
@@ -81,6 +86,8 @@ pub(crate) fn on_machine_added(
         yantra.init_machine(brahma_yantra::YantraMachineBuilder {
             logic_id: BrahmaLogic::LOGIC_ID,
             logic_name: BrahmaLogic::LOGIC_NAME.to_string(),
+            start: YANTRA_Start,
+            enabled: machine.enabled,
             owner_entity: ent_machine,
             state_lane_tags,
             transition_lane_tags,

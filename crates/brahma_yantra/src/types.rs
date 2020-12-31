@@ -19,8 +19,10 @@ pub struct YantraMachineBuilder {
     pub logic_name: String,
 
     // data
+    pub enabled: bool,
     pub owner_entity: Entity,
 
+    pub start: YantraState,
     pub states: Vec<YantraState>,
     pub state_lane_tags: Vec<Vec<CommandClosure>>,
     pub state_transitions: HashMap<YantraState, Vec<YantraTransition>>,
