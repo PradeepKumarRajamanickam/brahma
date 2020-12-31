@@ -14,6 +14,11 @@ pub struct YantraState(pub u64);
 pub struct YantraTransition(pub u64);
 
 pub struct YantraMachineBuilder {
+    // meta
+    pub logic_id: u64,
+    pub logic_name: String,
+
+    // data
     pub owner_entity: Entity,
 
     pub states: Vec<YantraState>,
@@ -26,9 +31,9 @@ pub struct YantraMachineBuilder {
 }
 
 pub(crate) struct YantraMachineData {
+    pub start_state: YantraState,
     pub current_state: Option<YantraState>,
     pub state_owned_lane: HashMap<YantraState, Vec<Entity>>,
-    pub state_transitions: HashMap<YantraState, Vec<YantraTransition>>,
     pub transition_target: HashMap<YantraTransition, YantraState>,
 }
 

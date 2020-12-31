@@ -79,6 +79,8 @@ pub(crate) fn on_machine_added(
         // **************
 
         yantra.init_machine(brahma_yantra::YantraMachineBuilder {
+            logic_id: BrahmaLogic::LOGIC_ID,
+            logic_name: BrahmaLogic::LOGIC_NAME.to_string(),
             owner_entity: ent_machine,
             state_lane_tags,
             transition_lane_tags,

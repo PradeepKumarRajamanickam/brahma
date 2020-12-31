@@ -50,6 +50,10 @@ impl Plugin for YantraPlugin {
             .add_system_to_stage(
                 YANTRA_MACHINE_UPDATE,
                 Yantra::on_initialise_lanes.system(),
+            )
+            .add_system_to_stage(
+                YANTRA_MACHINE_UPDATE,
+                Yantra::on_deinitialise_lanes.system(),
             );
     }
 }

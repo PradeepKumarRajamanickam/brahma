@@ -10,7 +10,9 @@ pub struct Lane;
 pub fn system(
     events: Res<Events<brahma_yantra::EventOnEnter>>,
     mut reader: Local<EventReader<brahma_yantra::EventOnEnter>>,
-    mut query: Query<Entity, (With<Lane>, With<YantraLaneActive>)>,
+
+    yantra: Res<Yantra>,
+    mut query: Query<Entity, With<Lane>>,
 ) {
     for ev in reader.iter(&events) {
         println!("Now Entered Choice State {}", ev.target.id());

@@ -1,13 +1,13 @@
 [package]
+authors = ["Pradeep Kumar Rajamanickam <raj.pradeep.kumar@gmail.com>"]
+categories = ["game-dev", "automaton", "productivity", "editor"]
+description = "Visual code + fsm editor for rust/bevy"
+edition = "2018"
+exclude = ["crates/**/*", ".github/**/*"]
+keywords = ["state", "machine", "gamedev", "fsm", "bevy"]
+license = "MIT"
 name = "brahma"
 version = "0.0.1"
-authors = ["Pradeep Kumar Rajamanickam <raj.pradeep.kumar@gmail.com>"]
-exclude = ["crates/**/*",".github/**/*"]
-edition = "2018"
-description = "Visual code + fsm editor for rust/bevy"
-license = "MIT"
-keywords = ["state", "machine", "gamedev", "fsm", "bevy"]
-categories = ["game-dev", "automaton", "productivity", "editor"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -16,10 +16,10 @@ members = ["crates/*"]
 
 [dependencies]
 bevy = "0.4"
-brahma_graph    = { path = "crates/brahma_graph" }
-brahma_yantra   = { path = "crates/brahma_yantra" }
+brahma_graph = {path = "crates/brahma_graph"}
+brahma_yantra = {path = "crates/brahma_yantra"}
 # brahma_scribe   = { path = "crates/brahma_scribe" }
 
 [[example]]
 name = "test"
-path = "test/test.rs"
+path = "test/main.rs"

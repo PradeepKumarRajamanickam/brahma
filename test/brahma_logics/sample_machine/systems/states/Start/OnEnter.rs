@@ -10,7 +10,7 @@ pub(crate) struct Lane;
 pub(crate) fn system(
     events: Res<Events<brahma_yantra::EventOnEnter>>,
     mut reader: Local<EventReader<brahma_yantra::EventOnEnter>>,
-    mut query: Query<Entity, (With<Lane>, With<YantraLaneActive>)>,
+    mut query: Query<Entity, With<Lane>>,
 ) {
     for ev in &mut reader.iter(&events) {
         if let Ok(e) = query.get(ev.target) {
