@@ -1,4 +1,9 @@
+use crate::*;
+
 #[derive(Default)]
-pub struct YantraEntityHolder;
+pub struct YantraMachineEntitiesHolder;
+
+// Lane Components
 /// This node is running
-pub struct IsRunning;
+#[derive(Default)]
+pub struct YantraLaneActive;
