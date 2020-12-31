@@ -16,10 +16,15 @@ pub fn system(
 ) {
     for ev in reader.iter(&events) {
         let target = ev.target;
-        println!("Now Entered Start State {}", ev.target.id());
-
         for entity in query.iter() {
-            if let Some(owner_machine) = yantra.get_owner_for_lane(entity) {}
+            if entity == target {
+                println!(
+                    "Now Entered Transition Start TO Choice State {}",
+                    target.id()
+                );
+                println!("Transitioning To Choice");
+                yantra.transition(entity);
+            }
         }
     }
 }
