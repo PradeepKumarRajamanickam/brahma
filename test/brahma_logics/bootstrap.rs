@@ -1,5 +1,4 @@
 use bevy::app::prelude::*;
-use bevy::ecs::IntoQuerySystem;
 use brahma_yantra::YantraPlugin;
 
 // generated

@@ -1,7 +1,6 @@
-use bevy::app::prelude::*;
-use brahma_yantra;
-
-use super::systems;
+use bevy::app::{prelude::*, startup_stage};
+use bevy::ecs::IntoSystem;
+use super::{machine, systems::*};
 
 #[derive(Default)]
 pub struct BrahmaLogic;
@@ -14,10 +13,25 @@ impl BrahmaLogic {
 impl Plugin for BrahmaLogic {
     fn build(&self, app: &mut AppBuilder) {
         app
-            // .add_startup_system_to_stage(startup_stage::POST_STARTUP, systems::on_machine_added.system())
-            // .add_startup_system_to_stage(startup_stage::POST_STARTUP, systems::on_machine_removed.system())
-            .add_system(systems::on_machine_added.system())
-            .add_system(systems::on_machine_removed.system());
+            // machine
+            .add_system_to_stage(
+                brahma_yantra::YANTRA_MACHINE_ADDED,
+                machine::on_machine_added.system(),
+            )
+            .add_system_to_stage(
+                brahma_yantra::YANTRA_MACHINE_REMOVED,
+                machine::on_machine_removed.system(),
+            )
+            // state lanes
+            .add_system_to_stage(
+                brahma_yantra::YANTRA_MACHINE_UPDATE,
+                states::Start::OnEnter::system.system(),
+            )
+            // transition lanes
+            .add_system_to_stage(
+                brahma_yantra::YANTRA_MACHINE_UPDATE,
+                transitions::Start_TO_Choice::OnEnter::system.system(),
+            );
 
         println!(
             "BrahmaLogic: Initialised Systems for Logic: {}, \tId: {} ",

@@ -1,5 +1,5 @@
 use bevy::app::prelude::*;
-use bevy::ecs::IntoQuerySystem;
+use bevy::ecs::IntoSystem;
 
 #[derive(Default)]
 pub struct BrahmaLogic;
