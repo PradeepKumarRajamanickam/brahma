@@ -24,6 +24,7 @@ pub struct Yantra {
 
     // owner
     lane_to_owner_machine: HashMap<Entity, Entity>,
+    lane_to_owner_transition: HashMap<Entity, YantraTransition>,
 }
 
 impl Yantra {
@@ -67,6 +68,17 @@ impl Yantra {
             println!("Machine has stopped {} ", machine.id());
         } else {
             println!("Machine not running. Stop ignored {} ", machine.id());
+        }
+    }
+
+    pub fn transition(&mut self, entity: Entity) {
+        if let Some(machine) = self.get_owner_for_lane(entity) {
+            let transition = self.get_transition_from_lane(entity).unwrap();
+            if let Some(data) = self.machine_to_data.get(&machine) {
+                if let Some(state) = data.transition_target.get(&transition) {
+                    self.run_state(*machine, *state);
+                }
+            }
         }
     }
 
@@ -119,6 +131,12 @@ impl Yantra {
     }
     pub fn get_owner_for_lane(&self, lane: Entity) -> Option<&Entity> {
         self.lane_to_owner_machine.get(&lane)
+    }
+    pub fn get_transition_from_lane(
+        &self,
+        lane: Entity,
+    ) -> Option<&YantraTransition> {
+        self.lane_to_owner_transition.get(&lane)
     }
 
     // crates
