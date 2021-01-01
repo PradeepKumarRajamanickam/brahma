@@ -5,14 +5,14 @@ use brahma_yantra::*;
 use super::*;
 
 #[derive(Default)]
-pub struct Lane;
+pub(crate) struct Lane;
 
-pub fn system(
-    events: Res<Events<brahma_yantra::EventOnEnter>>,
-    mut reader: Local<EventReader<brahma_yantra::EventOnEnter>>,
+pub(crate) fn system(
+    events: Res<Events<Event::OnEnter>>,
+    mut reader: Local<EventReader<Event::OnEnter>>,
 
     mut yantra: ResMut<Yantra>,
-    mut query: Query<Entity, With<Lane>>,
+    query: Query<Entity, With<Lane>>,
 ) {
     for ev in reader.iter(&events) {
         let target = ev.target;

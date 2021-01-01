@@ -72,6 +72,9 @@ impl Yantra {
 
                     ent_lane_vec.push(ent_lane);
                     yantra.lane_to_owner_machine.insert(ent_lane, owner_entity);
+                    yantra
+                        .lane_to_owner_transition
+                        .insert(ent_lane, yantra_transition);
 
                     println!(
                         "Added Transition Lane {} for Machine {}",
@@ -119,23 +122,23 @@ impl Yantra {
 
     pub(crate) fn on_yantra_lane_events(
         mut yantra: ResMut<Yantra>,
-        mut event_on_enter: ResMut<Events<EventOnEnter>>,
-        mut event_on_update: ResMut<Events<EventOnUpdate>>,
-        mut event_on_exit: ResMut<Events<EventOnExit>>,
+        mut event_on_enter: ResMut<Events<Event::OnEnter>>,
+        mut event_on_update: ResMut<Events<Event::OnUpdate>>,
+        mut event_on_exit: ResMut<Events<Event::OnExit>>,
     ) {
         while yantra.lane_on_exit_buffer.len() > 0 {
             let entity = yantra.lane_on_exit_buffer.pop().unwrap();
-            event_on_exit.send(EventOnExit { target: entity });
+            event_on_exit.send(Event::OnExit { target: entity });
         }
 
         for entity in yantra.running_lanes.iter() {
-            event_on_update.send(EventOnUpdate { target: *entity });
+            event_on_update.send(Event::OnUpdate { target: *entity });
         }
 
         while yantra.lane_on_enter_buffer.len() > 0 {
             let entity = yantra.lane_on_enter_buffer.pop().unwrap();
             println!("Sending OnEnter event for {}", entity.id());
-            event_on_enter.send(EventOnEnter { target: entity });
+            event_on_enter.send(Event::OnEnter { target: entity });
         }
     }
 }

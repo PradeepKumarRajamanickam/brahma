@@ -8,11 +8,12 @@ use super::*;
 pub(crate) struct Lane;
 
 pub(crate) fn system(
-    events: Res<Events<brahma_yantra::EventOnEnter>>,
-    mut reader: Local<EventReader<brahma_yantra::EventOnEnter>>,
-    mut query: Query<Entity, With<Lane>>,
+    events: Res<Events<Event::OnEnter>>,
+    mut reader: Local<EventReader<Event::OnEnter>>,
+
+    query: Query<Entity, With<Lane>>,
 ) {
-    for ev in &mut reader.iter(&events) {
+    for ev in reader.iter(&events) {
         if let Ok(e) = query.get(ev.target) {
             println!("Now Entered Start State {}", e.id());
         }

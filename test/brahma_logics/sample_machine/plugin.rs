@@ -27,6 +27,10 @@ impl Plugin for BrahmaLogic {
                 brahma_yantra::YANTRA_MACHINE_UPDATE,
                 states::Start::OnEnter::system.system(),
             )
+            .add_system_to_stage(
+                brahma_yantra::YANTRA_MACHINE_UPDATE,
+                states::Choice::OnEnter::system.system(),
+            )
             // transition lanes
             .add_system_to_stage(
                 brahma_yantra::YANTRA_MACHINE_UPDATE,

@@ -92,6 +92,7 @@ impl Yantra {
 
         if let Some(data) = self.machine_to_data.get_mut(&machine) {
             if let Some(lanes) = data.state_owned_lanes.get(&state) {
+                data.current_state = Some(state);
                 self.running_lanes.extend(lanes);
                 self.lane_on_enter_buffer.extend(lanes);
                 println!(

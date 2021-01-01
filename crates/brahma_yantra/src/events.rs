@@ -1,18 +1,13 @@
-use bevy::{ecs::Entity, utils::HashMap};
-
-use crate::*;
-
-// fsm events
-pub struct EventOnEnter {
-    pub target: Entity,
+pub mod Event {
+    use bevy::ecs::Entity;
+    // fsm events
+    pub struct OnEnter {
+        pub target: Entity,
+    }
+    pub struct OnUpdate {
+        pub target: Entity,
+    }
+    pub struct OnExit {
+        pub target: Entity,
+    }
 }
-pub struct EventOnUpdate {
-    pub target: Entity,
-}
-pub struct EventOnExit {
-    pub target: Entity,
-}
-
-// pub struct EventMachineReady {
-//     pub machine: Entity,
-// }

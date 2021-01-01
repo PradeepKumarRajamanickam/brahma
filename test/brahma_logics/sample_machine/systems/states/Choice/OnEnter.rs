@@ -5,16 +5,17 @@ use brahma_yantra::*;
 use super::*;
 
 #[derive(Default)]
-pub struct Lane;
+pub(crate) struct Lane;
 
-pub fn system(
-    events: Res<Events<brahma_yantra::EventOnEnter>>,
-    mut reader: Local<EventReader<brahma_yantra::EventOnEnter>>,
+pub(crate) fn system(
+    events: Res<Events<Event::OnEnter>>,
+    mut reader: Local<EventReader<Event::OnEnter>>,
 
-    yantra: Res<Yantra>,
-    mut query: Query<Entity, With<Lane>>,
+    query: Query<Entity, With<Lane>>,
 ) {
     for ev in reader.iter(&events) {
-        println!("Now Entered Choice State {}", ev.target.id());
+        if let Ok(e) = query.get(ev.target) {
+            println!("Now Entered Choice State {}", ev.target.id());
+        }
     }
 }

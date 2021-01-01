@@ -1,11 +1,13 @@
-pub use self::{components::*, stages::*, yantra::*, events::*, utils::*, types::*};
+pub use self::{
+    components::*, stages::*, yantra::*, utils::*, types::*, events::Event,
+};
 
 use bevy::prelude::*;
 
+mod events;
 mod components;
 mod stages;
 mod yantra;
-mod events;
 mod utils;
 mod types;
 mod systems;
@@ -45,9 +47,9 @@ impl Plugin for YantraPlugin {
             // resources
             .add_resource(Yantra::default())
             // events
-            .add_event::<EventOnEnter>()
-            .add_event::<EventOnUpdate>()
-            .add_event::<EventOnExit>()
+            .add_event::<Event::OnEnter>()
+            .add_event::<Event::OnUpdate>()
+            .add_event::<Event::OnExit>()
             // systems
             .add_startup_system_to_stage(
                 YANTRA_SETUP,
