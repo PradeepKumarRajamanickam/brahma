@@ -25,13 +25,14 @@ pub struct YantraMachineBuilder {
     pub start: YantraState,
     pub states: Vec<YantraState>,
     pub state_lane_tags: Vec<Vec<CommandClosure>>,
-    pub state_transitions: HashMap<YantraState, Vec<YantraTransition>>,
 
     pub transitions: Vec<YantraTransition>,
     pub transition_lane_tags: Vec<Vec<CommandClosure>>,
+    pub transition_state_owner: HashMap<YantraTransition, YantraState>,
     pub transition_target: HashMap<YantraTransition, YantraState>,
 }
 
+#[derive(Default)]
 pub(crate) struct YantraMachineData {
     pub start_state: YantraState,
     pub current_state: Option<YantraState>,

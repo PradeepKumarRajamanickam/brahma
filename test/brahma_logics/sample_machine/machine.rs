@@ -67,17 +67,16 @@ pub(crate) fn on_machine_added(
         let YANTRA_Start = STATE_Start;
 
         // * Transition target state to switch to
-        let mut hmap_transit_targets = HashMap::new();
+        let mut hmap_trans_targets = HashMap::new();
 
         // * Start > To > Choice
-        hmap_transit_targets.insert(TRANSITION_Start_TO_Choice, STATE_Choice);
-        hmap_transit_targets.insert(TRANSITION_Start_TO_Choice_1, STATE_Choice);
+        hmap_trans_targets.insert(TRANSITION_Start_TO_Choice, STATE_Choice);
+        hmap_trans_targets.insert(TRANSITION_Start_TO_Choice_1, STATE_Choice);
 
-        // * Transitions associated with states
-        let mut hmap_state_trans = HashMap::new();
-        hmap_state_trans
-            .insert(STATE_Start.clone(), vec![TRANSITION_Start_TO_Choice]);
-        hmap_state_trans.insert(STATE_Choice.clone(), vec![]);
+        // * Transitions associated to state
+        let mut hmap_trans_owner = HashMap::new();
+        hmap_trans_owner.insert(TRANSITION_Start_TO_Choice, STATE_Start);
+        hmap_trans_owner.insert(TRANSITION_Start_TO_Choice_1, STATE_Start);
 
         // **************
         // * INITIALISE *
@@ -93,8 +92,8 @@ pub(crate) fn on_machine_added(
             transition_lane_tags,
             states,
             transitions,
-            transition_target: hmap_transit_targets,
-            state_transitions: hmap_state_trans,
+            transition_target: hmap_trans_targets,
+            transition_state_owner: hmap_trans_owner,
         });
     }
 }
