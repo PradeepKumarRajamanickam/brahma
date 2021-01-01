@@ -1,11 +1,8 @@
-use std::{sync::Arc, collections::HashMap};
+use std::{collections::HashMap};
 
 use bevy::{
-    ecs::{Bundle, Commands, Component, DynamicBundle, Entity},
+    ecs::{Commands, Entity},
 };
-
-// #[derive(Clone, Copy, Default, Hash, PartialEq, Eq)]
-// pub struct YantraMachine(pub u64);
 
 #[derive(Clone, Copy, Default, Hash, PartialEq, Eq)]
 pub struct YantraState(pub u64);
@@ -13,6 +10,16 @@ pub struct YantraState(pub u64);
 #[derive(Clone, Copy, Default, Hash, PartialEq, Eq)]
 pub struct YantraTransition(pub u64);
 
+#[derive(Default)]
+pub(crate) struct YantraMachineData {
+    pub start_state: YantraState,
+    pub current_state: Option<YantraState>,
+    pub state_owned_lanes: HashMap<YantraState, Vec<Entity>>,
+    pub transition_target: HashMap<YantraTransition, YantraState>,
+}
+
+// builder
+pub type CommandClosure = fn(commands: &mut Commands) -> &mut Commands;
 pub struct YantraMachineBuilder {
     // meta
     pub logic_id: u64,
@@ -31,13 +38,3 @@ pub struct YantraMachineBuilder {
     pub transition_state_owner: HashMap<YantraTransition, YantraState>,
     pub transition_target: HashMap<YantraTransition, YantraState>,
 }
-
-#[derive(Default)]
-pub(crate) struct YantraMachineData {
-    pub start_state: YantraState,
-    pub current_state: Option<YantraState>,
-    pub state_owned_lanes: HashMap<YantraState, Vec<Entity>>,
-    pub transition_target: HashMap<YantraTransition, YantraState>,
-}
-
-pub type CommandClosure = fn(commands: &mut Commands) -> &mut Commands;
