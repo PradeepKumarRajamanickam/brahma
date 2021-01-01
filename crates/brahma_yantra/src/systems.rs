@@ -3,7 +3,7 @@ use crate::*;
 impl Yantra {
     // crates
     pub(crate) fn on_initialise_lanes(
-        mut commands: &mut Commands,
+        commands: &mut Commands,
         mut yantra: ResMut<Yantra>,
     ) {
         while yantra.init_buffer.len() > 0 {
@@ -109,7 +109,7 @@ impl Yantra {
     }
 
     pub(crate) fn on_deinitialise_lanes(
-        mut commands: &mut Commands,
+        commands: &mut Commands,
         mut yantra: ResMut<Yantra>,
     ) {
         while yantra.deinit_buffer.len() > 0 {

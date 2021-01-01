@@ -159,6 +159,7 @@ impl Yantra {
     }
 
     // privates
+    #[allow(dead_code)]
     fn get_current_buffer(frame_number: u32) -> u32 {
         return frame_number % 2;
     }
