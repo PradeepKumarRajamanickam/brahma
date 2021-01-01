@@ -11,6 +11,8 @@ pub struct Yantra {
     // buffers
     pub(crate) init_buffer: Vec<YantraMachineBuilder>,
     pub(crate) deinit_buffer: Vec<Entity>,
+    pub(crate) lane_on_exit_buffer: Vec<Entity>,
+    pub(crate) lane_on_enter_buffer: Vec<Entity>,
 
     // privates
     // machine
@@ -91,6 +93,7 @@ impl Yantra {
         if let Some(data) = self.machine_to_data.get_mut(&machine) {
             if let Some(lanes) = data.state_owned_lanes.get(&state) {
                 self.running_lanes.extend(lanes);
+                self.lane_on_enter_buffer.extend(lanes);
                 println!(
                     "Machine {} Lanes started running {:?} ",
                     machine.id(),
@@ -99,9 +102,9 @@ impl Yantra {
             }
 
             println!(
-                "State started running {} for Machine {}",
+                "Machine {} State started running {} ",
+                machine.id(),
                 state.0,
-                machine.id()
             )
         }
     }
@@ -111,6 +114,7 @@ impl Yantra {
             match data.current_state {
                 Some(state) => {
                     if let Some(lanes) = data.state_owned_lanes.get(&state) {
+                        self.lane_on_exit_buffer.extend(lanes);
                         for l in lanes {
                             self.running_lanes.remove(&l);
                         }

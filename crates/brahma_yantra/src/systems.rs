@@ -116,4 +116,26 @@ impl Yantra {
             commands.despawn_recursive(*entity);
         }
     }
+
+    pub(crate) fn on_yantra_lane_events(
+        mut yantra: ResMut<Yantra>,
+        mut event_on_enter: ResMut<Events<EventOnEnter>>,
+        mut event_on_update: ResMut<Events<EventOnUpdate>>,
+        mut event_on_exit: ResMut<Events<EventOnExit>>,
+    ) {
+        while yantra.lane_on_exit_buffer.len() > 0 {
+            let entity = yantra.lane_on_exit_buffer.pop().unwrap();
+            event_on_exit.send(EventOnExit { target: entity });
+        }
+
+        for entity in yantra.running_lanes.iter() {
+            event_on_update.send(EventOnUpdate { target: *entity });
+        }
+
+        while yantra.lane_on_enter_buffer.len() > 0 {
+            let entity = yantra.lane_on_enter_buffer.pop().unwrap();
+            println!("Sending OnEnter event for {}", entity.id());
+            event_on_enter.send(EventOnEnter { target: entity });
+        }
+    }
 }

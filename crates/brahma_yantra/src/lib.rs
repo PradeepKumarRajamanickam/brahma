@@ -37,6 +37,11 @@ impl Plugin for YantraPlugin {
                 YANTRA_MACHINE_REMOVED,
                 SystemStage::parallel(),
             )
+            .add_stage_after(
+                YANTRA_MACHINE_UPDATE,
+                YANTRA_MACHINE_EVENT_DISPATCH,
+                SystemStage::parallel(),
+            )
             // resources
             .add_resource(Yantra::default())
             // events
@@ -51,6 +56,10 @@ impl Plugin for YantraPlugin {
             .add_system_to_stage(
                 YANTRA_MACHINE_UPDATE,
                 Yantra::on_initialise_lanes.system(),
+            )
+            .add_system_to_stage(
+                YANTRA_MACHINE_EVENT_DISPATCH,
+                Yantra::on_yantra_lane_events.system(),
             )
             .add_system_to_stage(
                 YANTRA_MACHINE_UPDATE,
