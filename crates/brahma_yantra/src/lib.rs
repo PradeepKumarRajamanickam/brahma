@@ -1,6 +1,4 @@
-pub use self::{
-    components::*, stages::*, yantra::*, utils::*, types::*, events::Event,
-};
+pub use self::{components::*, stages::*, yantra::*, types::*, events::Event};
 
 use bevy::prelude::*;
 
@@ -8,7 +6,6 @@ mod events;
 mod components;
 mod stages;
 mod yantra;
-mod utils;
 mod types;
 mod systems;
 
