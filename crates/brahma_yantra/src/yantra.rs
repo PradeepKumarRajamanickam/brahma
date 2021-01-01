@@ -89,8 +89,13 @@ impl Yantra {
         self.stop_running_state(machine);
 
         if let Some(data) = self.machine_to_data.get_mut(&machine) {
-            if let Some(lanes) = data.state_owned_lane.get(&state) {
+            if let Some(lanes) = data.state_owned_lanes.get(&state) {
                 self.running_lanes.extend(lanes);
+                println!(
+                    "Machine {} Lanes started running {:?} ",
+                    machine.id(),
+                    lanes.iter().map(|x| x.id()).collect::<Vec<u32>>(),
+                );
             }
 
             println!(
@@ -105,10 +110,16 @@ impl Yantra {
         if let Some(data) = self.machine_to_data.get_mut(&machine) {
             match data.current_state {
                 Some(state) => {
-                    if let Some(lanes) = data.state_owned_lane.get(&state) {
+                    if let Some(lanes) = data.state_owned_lanes.get(&state) {
                         for l in lanes {
                             self.running_lanes.remove(&l);
                         }
+
+                        println!(
+                            "Machine {} Lanes stopped running {:?} ",
+                            machine.id(),
+                            lanes.iter().map(|x| x.id()).collect::<Vec<u32>>(),
+                        );
                     }
 
                     println!(

@@ -51,7 +51,7 @@ impl Yantra {
                     );
                 }
                 machine_data
-                    .state_owned_lane
+                    .state_owned_lanes
                     .insert(yantra_state, ent_lane_vec);
                 index = index + 1;
             }
@@ -81,7 +81,7 @@ impl Yantra {
                 }
 
                 let ent_vec = machine_data
-                    .state_owned_lane
+                    .state_owned_lanes
                     .get_mut(yantra_state)
                     .unwrap();
                 ent_vec.extend(ent_lane_vec);

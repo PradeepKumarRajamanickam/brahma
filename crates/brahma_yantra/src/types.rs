@@ -36,7 +36,7 @@ pub struct YantraMachineBuilder {
 pub(crate) struct YantraMachineData {
     pub start_state: YantraState,
     pub current_state: Option<YantraState>,
-    pub state_owned_lane: HashMap<YantraState, Vec<Entity>>,
+    pub state_owned_lanes: HashMap<YantraState, Vec<Entity>>,
     pub transition_target: HashMap<YantraTransition, YantraState>,
 }
 
