@@ -8,8 +8,8 @@ use super::super::super::super::events::Event as LogicEvent;
 pub(crate) struct Lane;
 
 pub(crate) fn system(
-    events: Res<Events<YantraEvent::OnEnter>>,
-    mut reader: Local<EventReader<YantraEvent::OnEnter>>,
+    events: Res<Events<LogicEvent::OnSubmit>>,
+    mut reader: Local<EventReader<LogicEvent::OnSubmit>>,
 
     mut yantra: ResMut<Yantra>,
     query: Query<Entity, With<Lane>>,

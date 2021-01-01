@@ -36,7 +36,7 @@ fn setup(
         //     sprite: Sprite::new(Vec2::new(120.0, 30.0)),
         //     ..Default::default()
         // })
-        // .with(brahma_logics::sample_machine::Machine)
+        // .with(brahma_logics::sample_machine::Machine::default())
         .spawn(SpriteBundle {
             material: materials.add(Color::rgb(0.5, 1.5, 0.0).into()),
             transform: Transform::from_translation(Vec3::new(
@@ -45,6 +45,6 @@ fn setup(
             sprite: Sprite::new(Vec2::new(120.0, 30.0)),
             ..Default::default()
         })
-        .with(brahma_logics::sample_machine::Machine { enabled: true });
+        .with(brahma_logics::sample_machine::Machine::default());
     println!("Test: Setup Done");
 }

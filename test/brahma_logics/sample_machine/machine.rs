@@ -10,9 +10,14 @@ use crate::brahma_logics::sample_machine::*;
 
 use super::*;
 
-#[derive(Default)]
 pub struct Machine {
     pub enabled: bool,
+}
+
+impl Default for Machine {
+    fn default() -> Self {
+        Machine { enabled: true }
+    }
 }
 
 // machine
@@ -28,8 +33,10 @@ pub(crate) fn on_machine_added(
 
         let STATE_Start = YantraState(1);
         let STATE_Choice = YantraState(2);
+        let STATE_A = YantraState(3);
+        let STATE_B = YantraState(4);
 
-        let states = vec![STATE_Start, STATE_Choice];
+        let states = vec![STATE_Start, STATE_Choice, STATE_A, STATE_B];
 
         // ***************
         // * TRANSITIONS *
@@ -37,10 +44,14 @@ pub(crate) fn on_machine_added(
 
         // * Start > TO > Choice
         let TRANSITION_Start_TO_Choice = YantraTransition(3);
-        let TRANSITION_Start_TO_Choice_1 = YantraTransition(4);
+        let TRANSITION_Choice_TO_A = YantraTransition(4);
+        let TRANSITION_Choice_TO_B = YantraTransition(5);
 
-        let transitions =
-            vec![TRANSITION_Start_TO_Choice, TRANSITION_Start_TO_Choice_1];
+        let transitions = vec![
+            TRANSITION_Start_TO_Choice,
+            TRANSITION_Choice_TO_A,
+            TRANSITION_Choice_TO_B,
+        ];
 
         // *********
         // * LANES *
@@ -49,6 +60,8 @@ pub(crate) fn on_machine_added(
             // commands
             vec![|c| c.spawn((states::Start::OnEnter::Lane::default(),))],
             vec![|c| c.spawn((states::Choice::OnEnter::Lane::default(),))],
+            vec![|c| c.spawn((states::A::OnEnter::Lane::default(),))],
+            vec![|c| c.spawn((states::B::OnEnter::Lane::default(),))],
         ];
 
         let transition_lane_tags: Vec<Vec<CommandClosure>> = vec![
@@ -56,6 +69,8 @@ pub(crate) fn on_machine_added(
             vec![|c| {
                 c.spawn((
                     transitions::Start_TO_Choice::OnEnter::Lane::default(),
+                    transitions::Choice_TO_A::OnSubmit::Lane::default(),
+                    transitions::Choice_TO_B::OnSubmit::Lane::default(),
                 ))
             }],
         ];
@@ -71,12 +86,14 @@ pub(crate) fn on_machine_added(
 
         // * Start > To > Choice
         hmap_trans_targets.insert(TRANSITION_Start_TO_Choice, STATE_Choice);
-        hmap_trans_targets.insert(TRANSITION_Start_TO_Choice_1, STATE_Choice);
+        hmap_trans_targets.insert(TRANSITION_Choice_TO_A, STATE_A);
+        hmap_trans_targets.insert(TRANSITION_Choice_TO_B, STATE_B);
 
         // * Transitions associated to state
         let mut hmap_trans_owner = HashMap::new();
         hmap_trans_owner.insert(TRANSITION_Start_TO_Choice, STATE_Start);
-        hmap_trans_owner.insert(TRANSITION_Start_TO_Choice_1, STATE_Start);
+        hmap_trans_owner.insert(TRANSITION_Choice_TO_A, STATE_Choice);
+        hmap_trans_owner.insert(TRANSITION_Choice_TO_B, STATE_Choice);
 
         // **************
         // * INITIALISE *

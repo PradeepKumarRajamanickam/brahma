@@ -1,15 +1,15 @@
 #![allow(non_snake_case)]
 use bevy::{prelude::*, ecs::*};
-use brahma_yantra::*;
-
-use super::*;
+use brahma_yantra::Yantra;
+use brahma_yantra::Event as YantraEvent;
+use super::super::super::super::events::Event as LogicEvent;
 
 #[derive(Default)]
 pub(crate) struct Lane;
 
 pub(crate) fn system(
-    events: Res<Events<Event::OnEnter>>,
-    mut reader: Local<EventReader<Event::OnEnter>>,
+    events: Res<Events<YantraEvent::OnEnter>>,
+    mut reader: Local<EventReader<YantraEvent::OnEnter>>,
 
     query: Query<Entity, With<Lane>>,
 ) {
