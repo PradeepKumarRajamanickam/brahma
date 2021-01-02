@@ -1,0 +1,5 @@
+[dependencies]
+bevy = "0.4"
+brahma_graph = {path = "../crates/brahma_graph"}
+brahma_yantra = {path = "../crates/brahma_yantra"}
+text_io = "0.1.8"

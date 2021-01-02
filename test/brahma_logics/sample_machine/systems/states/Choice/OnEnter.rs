@@ -17,7 +17,7 @@ pub(crate) fn system(
 ) {
     for ev in reader.iter(&events) {
         if let Ok(e) = query.get(ev.target) {
-            println!("Now Entered Choice State {}", ev.target.id());
+            println!("Now Entered Choice State Lane {}", ev.target.id());
         }
     }
 }

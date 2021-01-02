@@ -15,16 +15,16 @@ pub(crate) fn system(
     query: Query<Entity, With<Lane>>,
 ) {
     for ev in reader.iter(&events) {
-        let target = ev.target;
+        // let target = ev.target;
         for entity in query.iter() {
-            if entity == target {
-                println!(
-                    "Now Entered Transition Start TO Choice State {}",
-                    target.id()
-                );
-                println!("Transitioning To Choice");
+            if ev.input == "B" {
+                println!("Transitioning To B");
                 yantra.transition(entity);
             }
+            // if entity == target {
+            //     println!("Transitioning To Choice");
+            //     yantra.transition(entity);
+            // }
         }
     }
 }

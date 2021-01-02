@@ -1,6 +1,6 @@
 use bevy::app::{prelude::*, startup_stage};
 use bevy::ecs::IntoSystem;
-use super::{machine, systems::*};
+use super::{events::*, machine, systems::*};
 
 #[derive(Default)]
 pub struct BrahmaLogic;
@@ -22,6 +22,8 @@ impl Plugin for BrahmaLogic {
                 brahma_yantra::YANTRA_MACHINE_REMOVED,
                 machine::on_machine_removed.system(),
             )
+            // events
+            .add_event::<Event::OnSubmit>()
             // state lanes
             .add_system_to_stage(
                 brahma_yantra::YANTRA_MACHINE_UPDATE,
@@ -31,10 +33,30 @@ impl Plugin for BrahmaLogic {
                 brahma_yantra::YANTRA_MACHINE_UPDATE,
                 states::Choice::OnEnter::system.system(),
             )
+            .add_system_to_stage(
+                brahma_yantra::YANTRA_MACHINE_UPDATE,
+                states::Choice::OnUpdate::system.system(),
+            )
+            .add_system_to_stage(
+                brahma_yantra::YANTRA_MACHINE_UPDATE,
+                states::A::OnEnter::system.system(),
+            )
+            .add_system_to_stage(
+                brahma_yantra::YANTRA_MACHINE_UPDATE,
+                states::B::OnEnter::system.system(),
+            )
             // transition lanes
             .add_system_to_stage(
                 brahma_yantra::YANTRA_MACHINE_UPDATE,
                 transitions::Start_TO_Choice::OnEnter::system.system(),
+            )
+            .add_system_to_stage(
+                brahma_yantra::YANTRA_MACHINE_UPDATE,
+                transitions::Choice_TO_A::OnSubmit::system.system(),
+            )
+            .add_system_to_stage(
+                brahma_yantra::YANTRA_MACHINE_UPDATE,
+                transitions::Choice_TO_B::OnSubmit::system.system(),
             );
 
         println!(
