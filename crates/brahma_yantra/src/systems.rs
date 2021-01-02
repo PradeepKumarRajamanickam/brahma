@@ -44,11 +44,13 @@ impl Yantra {
                     ent_lane_vec.push(ent_lane);
                     yantra.lane_to_owner_machine.insert(ent_lane, owner_entity);
 
-                    println!(
-                        "Added State Lane {} for Machine {}",
-                        ent_lane.id(),
-                        owner_entity.id()
-                    );
+                    if yantra.log_enabled && yantra.log_verbose {
+                        println!(
+                            "Added State Lane {} for Machine {}",
+                            ent_lane.id(),
+                            owner_entity.id()
+                        );
+                    }
                 }
                 machine_data
                     .state_owned_lanes
@@ -76,11 +78,13 @@ impl Yantra {
                         .lane_to_owner_transition
                         .insert(ent_lane, yantra_transition);
 
-                    println!(
-                        "Added Transition Lane {} for Machine {}",
-                        ent_lane.id(),
-                        owner_entity.id()
-                    );
+                    if yantra.log_enabled && yantra.log_verbose {
+                        println!(
+                            "Added Transition Lane {} for Machine {}",
+                            ent_lane.id(),
+                            owner_entity.id()
+                        );
+                    }
                 }
 
                 let ent_vec = machine_data

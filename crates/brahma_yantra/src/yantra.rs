@@ -6,6 +6,11 @@ use crate::*;
 
 #[derive(Default)]
 pub struct Yantra {
+    // public
+    // log
+    pub log_enabled: bool,
+    pub log_verbose: bool,
+
     // lane_holder
     pub(crate) yantra_entity: Option<Entity>,
     // buffers
@@ -101,18 +106,22 @@ impl Yantra {
                 data.current_state = Some(state);
                 self.running_lanes.extend(lanes);
                 self.lane_on_enter_buffer.extend(lanes);
-                println!(
-                    "Machine {} Lanes started running {:?} ",
-                    machine.id(),
-                    lanes.iter().map(|x| x.id()).collect::<Vec<u32>>(),
-                );
-            }
 
-            println!(
-                "Machine {} State started running {} ",
-                machine.id(),
-                state.0,
-            )
+                if self.log_enabled && self.log_verbose {
+                    println!(
+                        "Machine {} Lanes started running {:?} ",
+                        machine.id(),
+                        lanes.iter().map(|x| x.id()).collect::<Vec<u32>>(),
+                    );
+                }
+            }
+            if self.log_enabled {
+                println!(
+                    "Machine {} State started running {} ",
+                    machine.id(),
+                    state.0,
+                )
+            }
         }
     }
 
@@ -125,19 +134,24 @@ impl Yantra {
                         for l in lanes {
                             self.running_lanes.remove(&l);
                         }
-
+                        if self.log_enabled && self.log_verbose {
+                            println!(
+                                "Machine {} Lanes stopped running {:?} ",
+                                machine.id(),
+                                lanes
+                                    .iter()
+                                    .map(|x| x.id())
+                                    .collect::<Vec<u32>>(),
+                            );
+                        }
+                    }
+                    if self.log_enabled {
                         println!(
-                            "Machine {} Lanes stopped running {:?} ",
-                            machine.id(),
-                            lanes.iter().map(|x| x.id()).collect::<Vec<u32>>(),
+                            "State stopped {} for Machine {}",
+                            state.0,
+                            machine.id()
                         );
                     }
-
-                    println!(
-                        "State stopped {} for Machine {}",
-                        state.0,
-                        machine.id()
-                    );
                 }
                 None => {
                     println!(
