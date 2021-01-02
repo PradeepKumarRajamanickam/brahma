@@ -58,27 +58,43 @@ pub(crate) fn on_machine_added(
         // *********
         let state_lane_tags: Vec<Vec<CommandClosure>> = vec![
             // commands
-            vec![|c| c.spawn((states::Start::OnEnter::Lane::default(),))],
+            vec![|c, machine| {
+                c.spawn((states::Start::OnEnter::Lane { owner: machine },))
+            }],
             vec![
-                |c| c.spawn((states::Choice::OnEnter::Lane::default(),)),
-                |c| c.spawn((states::Choice::OnUpdate::Lane::default(),)),
+                |c, machine| {
+                    c.spawn((states::Choice::OnEnter::Lane { owner: machine },))
+                },
+                |c, machine| {
+                    c.spawn(
+                        (states::Choice::OnUpdate::Lane { owner: machine },),
+                    )
+                },
             ],
-            vec![|c| c.spawn((states::A::OnEnter::Lane::default(),))],
-            vec![|c| c.spawn((states::B::OnEnter::Lane::default(),))],
+            vec![|c, machine| {
+                c.spawn((states::A::OnEnter::Lane { owner: machine },))
+            }],
+            vec![|c, machine| {
+                c.spawn((states::B::OnEnter::Lane { owner: machine },))
+            }],
         ];
 
         let transition_lane_tags: Vec<Vec<CommandClosure>> = vec![
             // commands
-            vec![|c| {
-                c.spawn((
-                    transitions::Start_TO_Choice::OnEnter::Lane::default(),
-                ))
+            vec![|c, machine| {
+                c.spawn((transitions::Start_TO_Choice::OnEnter::Lane {
+                    owner: machine,
+                },))
             }],
-            vec![|c| {
-                c.spawn((transitions::Choice_TO_A::OnSubmit::Lane::default(),))
+            vec![|c, machine| {
+                c.spawn((transitions::Choice_TO_A::OnSubmit::Lane {
+                    owner: machine,
+                },))
             }],
-            vec![|c| {
-                c.spawn((transitions::Choice_TO_B::OnSubmit::Lane::default(),))
+            vec![|c, machine| {
+                c.spawn((transitions::Choice_TO_B::OnSubmit::Lane {
+                    owner: machine,
+                },))
             }],
         ];
 

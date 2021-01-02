@@ -13,6 +13,7 @@ pub struct Yantra {
     pub(crate) deinit_buffer: Vec<Entity>,
     pub(crate) lane_on_exit_buffer: Vec<Entity>,
     pub(crate) lane_on_enter_buffer: Vec<Entity>,
+    // pub(crate) lane_event_buffer: Vec<[Local,>,
 
     // privates
     // machine
@@ -31,6 +32,11 @@ pub struct Yantra {
 
 impl Yantra {
     //publics
+    pub fn is_same_machine(&self, lane_a: Entity, lane_b: Entity) -> bool {
+        let lane_a_machine = *self.get_owner_for_lane(lane_a).unwrap();
+        let lane_b_machine = *self.get_owner_for_lane(lane_b).unwrap();
+        return lane_a_machine == lane_b_machine;
+    }
     pub fn is_machine_running(&self, machine: Entity) -> bool {
         return self.machine_is_running.contains(&machine);
     }

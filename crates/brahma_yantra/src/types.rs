@@ -19,7 +19,8 @@ pub(crate) struct YantraMachineData {
 }
 
 // builder
-pub type CommandClosure = fn(commands: &mut Commands) -> &mut Commands;
+pub type CommandClosure =
+    fn(commands: &mut Commands, machine: Entity) -> &mut Commands;
 pub struct YantraMachineBuilder {
     // meta
     pub logic_id: u64,

@@ -1,30 +1,34 @@
 #![allow(non_snake_case)]
-use bevy::{prelude::*, ecs::*};
+use bevy::prelude::*;
 use brahma_yantra::Yantra;
-use brahma_yantra::Event as YantraEvent;
+use brahma_yantra::Trait::Owner;
+
 use super::super::super::super::events::Event as LogicEvent;
 
-#[derive(Default)]
-pub(crate) struct Lane;
+pub(crate) struct Lane {
+    pub owner: Entity,
+}
 
+// local event
 pub(crate) fn system(
     events: Res<Events<LogicEvent::OnSubmit>>,
     mut reader: Local<EventReader<LogicEvent::OnSubmit>>,
 
     mut yantra: ResMut<Yantra>,
-    query: Query<Entity, With<Lane>>,
+    query: Query<(Entity, &Lane), With<Lane>>,
 ) {
     for ev in reader.iter(&events) {
-        // let target = ev.target;
-        for entity in query.iter() {
-            if ev.input == "B" {
-                println!("Transitioning To B");
-                yantra.transition(entity);
+        let target_machine: Entity = ev.get_owner();
+        for (entity, lane) in query.iter() {
+            if target_machine == lane.owner {
+                if ev.input == "B" {
+                    println!(
+                        "Transitioning To B, on Machine {}",
+                        yantra.get_owner_for_lane(entity).unwrap().id()
+                    );
+                    yantra.transition(entity);
+                }
             }
-            // if entity == target {
-            //     println!("Transitioning To Choice");
-            //     yantra.transition(entity);
-            // }
         }
     }
 }

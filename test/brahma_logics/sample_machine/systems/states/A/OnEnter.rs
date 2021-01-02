@@ -4,9 +4,9 @@ use brahma_yantra::Yantra;
 use brahma_yantra::Event as YantraEvent;
 use super::super::super::super::events::Event as LogicEvent;
 
-#[derive(Default)]
-pub(crate) struct Lane;
-
+pub(crate) struct Lane {
+    pub owner: Entity,
+}
 pub(crate) fn system(
     events: Res<Events<YantraEvent::OnEnter>>,
     mut reader: Local<EventReader<YantraEvent::OnEnter>>,

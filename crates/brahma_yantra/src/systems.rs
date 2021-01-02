@@ -36,7 +36,7 @@ impl Yantra {
                 let yantra_state = mach_builder.states[index];
                 let mut ent_lane_vec: Vec<Entity> = vec![];
                 for _build in _lane_state {
-                    let ent_lane = _build(commands)
+                    let ent_lane = _build(commands, owner_entity)
                         .with(Parent(machine_entity))
                         .current_entity()
                         .unwrap();
@@ -65,7 +65,7 @@ impl Yantra {
                     .unwrap();
                 let mut ent_lane_vec: Vec<Entity> = vec![];
                 for _build in _lane_transition {
-                    let ent_lane = _build(commands)
+                    let ent_lane = _build(commands, owner_entity)
                         .with(Parent(machine_entity))
                         .current_entity()
                         .unwrap();

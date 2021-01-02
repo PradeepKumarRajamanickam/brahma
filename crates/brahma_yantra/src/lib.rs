@@ -1,4 +1,6 @@
-pub use self::{components::*, stages::*, yantra::*, types::*, events::Event};
+pub use self::{
+    components::*, stages::*, yantra::*, types::*, events::Event, traits::Trait,
+};
 
 use bevy::prelude::*;
 
@@ -8,6 +10,7 @@ mod stages;
 mod yantra;
 mod types;
 mod systems;
+mod traits;
 
 #[derive(Default)]
 pub struct YantraPlugin;
