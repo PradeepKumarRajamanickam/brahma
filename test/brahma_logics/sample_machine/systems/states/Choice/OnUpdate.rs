@@ -16,7 +16,7 @@ pub(crate) fn system(
     mut reader: Local<EventReader<YantraEvent::OnUpdate>>,
 
     mut logic_event_OnSubmit: ResMut<Events<LogicEvent::OnSubmit>>,
-    query: Query<(Entity, &Lane), With<Lane>>,
+    query: Query<(Entity, &Lane)>,
 ) {
     for ev in reader.iter(&events) {
         if let Ok((e, lane)) = query.get(ev.target) {

@@ -31,6 +31,10 @@ impl Plugin for BrahmaLogic {
             )
             .add_system_to_stage(
                 brahma_yantra::YANTRA_MACHINE_UPDATE,
+                states::Start::OnExit::system.system(),
+            )
+            .add_system_to_stage(
+                brahma_yantra::YANTRA_MACHINE_UPDATE,
                 states::Choice::OnEnter::system.system(),
             )
             .add_system_to_stage(
@@ -40,6 +44,10 @@ impl Plugin for BrahmaLogic {
             .add_system_to_stage(
                 brahma_yantra::YANTRA_MACHINE_UPDATE,
                 states::A::OnEnter::system.system(),
+            )
+            .add_system_to_stage(
+                brahma_yantra::YANTRA_MACHINE_UPDATE,
+                states::A::OnExit::system.system(),
             )
             .add_system_to_stage(
                 brahma_yantra::YANTRA_MACHINE_UPDATE,
