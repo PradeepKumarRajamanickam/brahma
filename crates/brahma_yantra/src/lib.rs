@@ -45,7 +45,10 @@ impl Plugin for YantraPlugin {
                 SystemStage::parallel(),
             )
             // resources
-            .add_resource(Yantra::default())
+            .add_resource(Yantra {
+                log_enabled: false,
+                ..Default::default()
+            })
             // events
             .add_event::<Event::OnEnter>()
             .add_event::<Event::OnUpdate>()
