@@ -130,18 +130,27 @@ impl Yantra {
         mut event_on_update: ResMut<Events<Event::OnUpdate>>,
         mut event_on_exit: ResMut<Events<Event::OnExit>>,
     ) {
-        while yantra.lane_on_enter_buffer.len() > 0 {
-            let entity = yantra.lane_on_enter_buffer.pop().unwrap();
-            event_on_enter.send(Event::OnEnter { target: entity });
-        }
+        // generate all running items since prev frame
+        let mut all_items = yantra.prev_running_lanes.clone();
+        all_items.extend(&yantra.running_lanes);
 
-        for entity in yantra.running_lanes.iter() {
-            event_on_update.send(Event::OnUpdate { target: *entity });
+        // generate an event queue
+        for entity in all_items {
+            let was_running = yantra.prev_running_lanes.contains(&entity);
+            let is_running = yantra.running_lanes.contains(&entity);
+            match (was_running, is_running) {
+                (false, true) => {
+                    event_on_enter.send(Event::OnEnter { target: entity });
+                }
+                (true, true) => {
+                    event_on_update.send(Event::OnUpdate { target: entity });
+                }
+                (true, false) => {
+                    event_on_exit.send(Event::OnExit { target: entity });
+                }
+                _ => {}
+            }
         }
-
-        while yantra.lane_on_exit_buffer.len() > 0 {
-            let entity = yantra.lane_on_exit_buffer.pop().unwrap();
-            event_on_exit.send(Event::OnExit { target: entity });
-        }
+        yantra.prev_running_lanes = yantra.running_lanes.clone();
     }
 }

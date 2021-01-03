@@ -16,9 +16,6 @@ pub struct Yantra {
     // buffers
     pub(crate) init_buffer: Vec<YantraMachineBuilder>,
     pub(crate) deinit_buffer: Vec<Entity>,
-    pub(crate) lane_on_exit_buffer: Vec<Entity>,
-    pub(crate) lane_on_enter_buffer: Vec<Entity>,
-    // pub(crate) lane_event_buffer: Vec<[Local,>,
 
     // privates
     // machine
@@ -29,6 +26,7 @@ pub struct Yantra {
 
     // lanes
     pub(crate) running_lanes: HashSet<Entity>,
+    pub(crate) prev_running_lanes: HashSet<Entity>,
 
     // owner
     pub(crate) lane_to_owner_machine: HashMap<Entity, Entity>,
@@ -105,7 +103,6 @@ impl Yantra {
             if let Some(lanes) = data.state_owned_lanes.get(&state) {
                 data.current_state = Some(state);
                 self.running_lanes.extend(lanes);
-                self.lane_on_enter_buffer.extend(lanes);
 
                 if self.log_enabled && self.log_verbose {
                     println!(
@@ -130,7 +127,6 @@ impl Yantra {
             match data.current_state {
                 Some(state) => {
                     if let Some(lanes) = data.state_owned_lanes.get(&state) {
-                        self.lane_on_exit_buffer.extend(lanes);
                         for l in lanes {
                             self.running_lanes.remove(&l);
                         }
