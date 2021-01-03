@@ -4,7 +4,6 @@ edition = "2018"
 license = "MIT"
 name = "brahma_yantra"
 version = "0.1.0"
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
 bevy = "0.4"
