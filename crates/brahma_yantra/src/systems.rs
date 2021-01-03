@@ -124,7 +124,7 @@ impl Yantra {
         }
     }
 
-    pub(crate) fn on_yantra_lane_events(
+    pub(crate) fn on_dispatch_yantra_lane_events(
         mut yantra: ResMut<Yantra>,
         mut event_on_enter: ResMut<Events<Event::OnEnter>>,
         mut event_on_update: ResMut<Events<Event::OnUpdate>>,

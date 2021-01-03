@@ -61,7 +61,7 @@ impl Plugin for YantraPlugin {
             )
             .add_system_to_stage(
                 YANTRA_MACHINE_EVENT_DISPATCH,
-                Yantra::on_yantra_lane_events.system(),
+                Yantra::on_dispatch_yantra_lane_events.system(),
             )
             .add_system_to_stage(
                 YANTRA_MACHINE_UPDATE,
