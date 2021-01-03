@@ -13,14 +13,11 @@ pub(crate) fn system(
 
     mut yantra: ResMut<Yantra>,
 
-    query: Query<Entity, With<Lane>>,
+    query: Query<(Entity, &Lane)>,
 ) {
     for ev in reader.iter(&events) {
-        if let Ok(e) = query.get(ev.target) {
+        if let Ok((e, lane)) = query.get(ev.target) {
             println!("Now Exited Start State {}", ev.target.id());
-
-            let machine = yantra.get_owner_for_lane(e).unwrap().clone();
-            yantra.stop(machine);
         }
     }
 }

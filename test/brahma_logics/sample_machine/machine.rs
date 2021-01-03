@@ -58,9 +58,14 @@ pub(crate) fn on_machine_added(
         // *********
         let state_lane_tags: Vec<Vec<CommandClosure>> = vec![
             // commands
-            vec![|c, machine| {
-                c.spawn((states::Start::OnEnter::Lane { owner: machine },))
-            }],
+            vec![
+                |c, machine| {
+                    c.spawn((states::Start::OnEnter::Lane { owner: machine },))
+                },
+                |c, machine| {
+                    c.spawn((states::Start::OnExit::Lane { owner: machine },))
+                },
+            ],
             vec![
                 |c, machine| {
                     c.spawn((states::Choice::OnEnter::Lane { owner: machine },))
